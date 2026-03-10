@@ -1,20 +1,22 @@
 package com.devdiego.springboot_web.product.infraestructure.api;
 
 import com.devdiego.springboot_web.product.domain.Product;
+import com.devdiego.springboot_web.product.domain.ProductDto;
 import com.devdiego.springboot_web.product.domain.ProductRepository;
+import com.devdiego.springboot_web.product.mappers.ProductMapper;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/v1/products")
 public class ProductController implements ProductApi {
 
     private final ProductRepository productRepository;
+    private final ProductMapper productMapper;
 
-    public ProductController(ProductRepository productRepository) {
+    public ProductController(ProductRepository productRepository, ProductMapper productMapper) {
         this.productRepository = productRepository;
+        this.productMapper = productMapper;
     }
 
     @GetMapping()
@@ -23,10 +25,13 @@ public class ProductController implements ProductApi {
     }
 
     @GetMapping("/{id}")
-    public Optional<Product> getProductById(@PathVariable Long id) {
-
-        return productRepository.findById(id);
+    public ResponseEntity<ProductDto> getProductById(@PathVariable Long id) {
+        return productRepository.findById(id)
+                .map(productMapper::productToProductDto)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
+
 
     @PostMapping
     public ResponseEntity saveProduct(@RequestBody Product productToBeSaved) {
