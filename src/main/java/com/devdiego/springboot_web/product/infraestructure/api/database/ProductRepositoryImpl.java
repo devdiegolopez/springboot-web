@@ -2,11 +2,12 @@ package com.devdiego.springboot_web.product.infraestructure.api.database;
 
 import com.devdiego.springboot_web.product.domain.Product;
 import com.devdiego.springboot_web.product.domain.ProductRepository;
-import com.devdiego.springboot_web.product.infraestructure.api.ProductJpaRepository;
+import com.devdiego.springboot_web.product.domain.exceptions.ProductErrorMessage;
+import com.devdiego.springboot_web.product.domain.exceptions.ProductException;
+import com.devdiego.springboot_web.product.infraestructure.output.ProductJpaRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class ProductRepositoryImpl implements ProductRepository {
@@ -22,8 +23,9 @@ public class ProductRepositoryImpl implements ProductRepository {
     }
 
     @Override
-    public Optional<Product> findById(Long id) {
-        return productJpaRepository.findById(id);
+    public Product findById(Long id) {
+        return productJpaRepository.findById(id)
+                .orElseThrow(() -> new ProductException(ProductErrorMessage.PRODUCT_NOT_FOUND));
     }
 
     @Override
