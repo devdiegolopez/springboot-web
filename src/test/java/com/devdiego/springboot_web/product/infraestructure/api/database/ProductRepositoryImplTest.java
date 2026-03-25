@@ -1,6 +1,6 @@
 package com.devdiego.springboot_web.product.infraestructure.api.database;
 
-import com.devdiego.springboot_web.product.infraestructure.api.ProductJpaRepository;
+import com.devdiego.springboot_web.product.infraestructure.output.ProductJpaRepository;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 

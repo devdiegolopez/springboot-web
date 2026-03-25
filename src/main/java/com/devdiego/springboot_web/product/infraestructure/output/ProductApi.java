@@ -1,7 +1,6 @@
-package com.devdiego.springboot_web.product.infraestructure.api;
+package com.devdiego.springboot_web.product.infraestructure.output;
 
 import com.devdiego.springboot_web.product.domain.Product;
-import com.devdiego.springboot_web.product.domain.ProductDto;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -12,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 public interface ProductApi {
     ResponseEntity response(@RequestParam String pagedSize);
 
-    ResponseEntity<ProductDto> getProductById(@PathVariable Long id);
+    Product getProductById(@PathVariable Long id);
 
     ResponseEntity saveProduct(@RequestBody Product productToBeSaved);
 

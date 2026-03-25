@@ -1,8 +1,8 @@
-package com.devdiego.springboot_web.product.infraestructure.api;
+package com.devdiego.springboot_web.product.infraestructure.input;
 
 import com.devdiego.springboot_web.product.domain.Product;
-import com.devdiego.springboot_web.product.domain.ProductDto;
 import com.devdiego.springboot_web.product.domain.ProductRepository;
+import com.devdiego.springboot_web.product.infraestructure.output.ProductApi;
 import com.devdiego.springboot_web.product.mappers.ProductMapper;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -25,11 +25,8 @@ public class ProductController implements ProductApi {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ProductDto> getProductById(@PathVariable Long id) {
-        return productRepository.findById(id)
-                .map(productMapper::productToProductDto)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+    public Product getProductById(@PathVariable Long id) {
+        return productRepository.findById(id);
     }
 
 
